@@ -14,8 +14,11 @@ import java.util.ArrayList;
 
 public class AyahAdapter extends ArrayAdapter<tayahModel> {
 
-    public AyahAdapter(@NonNull Context context, ArrayList<tayahModel> ayahslist) {
+    String language;
+
+    public AyahAdapter(@NonNull Context context, ArrayList<tayahModel> ayahslist, String language) {
         super(context, 0, ayahslist);
+        this.language = language;
     }
 
     @NonNull
@@ -29,7 +32,11 @@ public class AyahAdapter extends ArrayAdapter<tayahModel> {
         TextView translation  = convertView.findViewById(R.id.surah_ayah_translation);
 
         arabic.setText(ayah.getArabicText());
-        translation.setText(ayah.getTranslationU());
+
+        if(this.language.equals("English"))
+            translation.setText(ayah.getTranslationE());
+        else if(this.language.equals("Urdu"))
+            translation.setText(ayah.getTranslationU());
 
         return convertView;
     }

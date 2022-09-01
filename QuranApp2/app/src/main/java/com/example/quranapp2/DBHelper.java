@@ -39,49 +39,6 @@ public class DBHelper extends SQLiteOpenHelper {
         CopyDatabase();
     }
 
-    public int insert_tsurah(){
-        int size = 0;
-        try {
-            InputStream inputStream = this.context.getAssets().open("tsurah.csv");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            ArrayList<tsurahModel> list = new ArrayList<tsurahModel>();
-            String[] nextRecord;
-            String line;
-
-            reader.readLine();
-            line = reader.readLine();
-            while(line != null){
-                nextRecord = line.split(",\"");
-                int SurahID = Integer.parseInt(nextRecord[0]);
-                String SurahIntro = nextRecord[1];
-                String SurahNameE = nextRecord[2];
-                String Nazool = nextRecord[3];
-                String SurahNameU = nextRecord[4];
-
-                list.add(new tsurahModel(SurahID, SurahIntro, SurahNameE, Nazool, SurahNameU));
-                line = reader.readLine();
-                Log.e("obj", list.get(0).toString());
-            }
-
-
-            SQLiteDatabase db = this.getWritableDatabase();
-            for (tsurahModel surah: list) {
-                ContentValues cv = new ContentValues();
-                cv.put("SurahID", surah.getSurahID());
-                cv.put("SurahIntro", surah.getSurahIntro());
-                cv.put("SurahNameE", surah.getSurahNameE());
-                cv.put("Nazool", surah.getNazool());
-                cv.put("SurahNameU", surah.getSurahNameU());
-                db.insert("tsurah", null, cv);
-            }
-            db.close();
-            size = list.size();
-        }catch(Exception e){
-
-        }
-        return size;
-    }
-
     public ArrayList<tsurahModel> getAllSurahs(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursorCourses = db.rawQuery("SELECT * FROM tsurah", null);
@@ -104,11 +61,32 @@ public class DBHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    public tayahModel getBismillah(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursorCourses = db.rawQuery("SELECT * FROM tayah WHERE AyaID=0", null);
+        cursorCourses.moveToFirst();
+        int AyaID = cursorCourses.getInt(0);
+        int SuraID = cursorCourses.getInt(1);
+        int AyaNo = cursorCourses.getInt(2);
+        String ArabicText = cursorCourses.getString(3);
+        String TranslationU = cursorCourses.getString(4);
+        String TranslationE = cursorCourses.getString(6);
+        int RakuID = cursorCourses.getInt(8);
+        int PRakuID = cursorCourses.getInt(9);
+        int ParaID = cursorCourses.getInt(10);
+
+        tayahModel ayah = new tayahModel( AyaID,  SuraID,  AyaNo,  ArabicText,  TranslationU,  TranslationE,  RakuID,  PRakuID,  ParaID);
+        return ayah;
+    }
+
     public ArrayList<tayahModel> getAllAyahs(int surahID){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursorCourses = db.rawQuery("SELECT * FROM tayah WHERE SuraID="+surahID, null);
 
         ArrayList<tayahModel> list = new ArrayList<tayahModel>();
+        if(surahID != 1)
+            list.add(getBismillah());
+
         tayahModel ayah;
         if(cursorCourses.moveToFirst()) {
             while(!cursorCourses.isAfterLast()) {
@@ -117,10 +95,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 int AyaNo = cursorCourses.getInt(2);
                 String ArabicText = cursorCourses.getString(3);
                 String TranslationU = cursorCourses.getString(4);
-                String TranslationE = cursorCourses.getString(5);
-                int RakuID = cursorCourses.getInt(6);
-                int PRakuID = cursorCourses.getInt(7);
-                int ParaID = cursorCourses.getInt(8);
+                String TranslationE = cursorCourses.getString(6);
+                int RakuID = cursorCourses.getInt(8);
+                int PRakuID = cursorCourses.getInt(9);
+                int ParaID = cursorCourses.getInt(10);
 
                 ayah = new tayahModel( AyaID,  SuraID,  AyaNo,  ArabicText,  TranslationU,  TranslationE,  RakuID,  PRakuID,  ParaID);
                 list.add(ayah);
