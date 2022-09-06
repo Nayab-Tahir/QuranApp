@@ -79,6 +79,16 @@ public class DBHelper extends SQLiteOpenHelper {
         return ayah;
     }
 
+    public String[] getSurahName(int surahID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursorCourses = db.rawQuery("SELECT SurahNameE, SurahNameU FROM tsurah WHERE SurahID="+surahID, null);
+        String[] list = new String[2];
+        cursorCourses.moveToFirst();
+        list[0] = cursorCourses.getString(0);
+        list[1] = cursorCourses.getString(1);
+        return list;
+    }
+
     public ArrayList<tayahModel> getAllAyahs(int surahID){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursorCourses = db.rawQuery("SELECT * FROM tayah WHERE SuraID="+surahID, null);
@@ -106,6 +116,94 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
         return list;
+    }
+
+    public ArrayList<tayahModel> getParah(int p){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursorCourses = db.rawQuery("SELECT * FROM tayah WHERE ParaID = "+ p + " ORDER BY SuraID, AyaNo", null);
+
+        tayahModel ayah;
+        ArrayList<tayahModel> surah = new ArrayList<tayahModel>();
+
+        int prev = 0;
+        if(cursorCourses.moveToFirst()) {
+            int AyaID = cursorCourses.getInt(0);
+            int SuraID = cursorCourses.getInt(1);
+            int AyaNo = cursorCourses.getInt(2);
+            String ArabicText = cursorCourses.getString(3);
+            String TranslationU = cursorCourses.getString(4);
+            String TranslationE = cursorCourses.getString(6);
+            int RakuID = cursorCourses.getInt(8);
+            int PRakuID = cursorCourses.getInt(9);
+            int ParaID = cursorCourses.getInt(10);
+
+            String name = getSurahName(SuraID)[1];
+
+            if(AyaNo != 1 || SuraID == 1){
+                ArabicText = name  + "\n\n" + ArabicText;
+            }
+            else{
+                tayahModel temp = getBismillah();
+                temp.setArabicText(name + "\n\n" + temp.getArabicText());
+                surah.add(temp);
+            }
+
+            ayah = new tayahModel( AyaID,  SuraID,  AyaNo,  ArabicText,  TranslationU,  TranslationE,  RakuID,  PRakuID,  ParaID);
+            surah.add(ayah);
+
+            prev = SuraID;
+            cursorCourses.moveToNext();
+        }
+
+        while(!cursorCourses.isAfterLast()) {
+            int AyaID = cursorCourses.getInt(0);
+            int SuraID = cursorCourses.getInt(1);
+            int AyaNo = cursorCourses.getInt(2);
+            String ArabicText = cursorCourses.getString(3);
+            String TranslationU = cursorCourses.getString(4);
+            String TranslationE = cursorCourses.getString(6);
+            int RakuID = cursorCourses.getInt(8);
+            int PRakuID = cursorCourses.getInt(9);
+            int ParaID = cursorCourses.getInt(10);
+
+            ayah = new tayahModel( AyaID,  SuraID,  AyaNo,  ArabicText,  TranslationU,  TranslationE,  RakuID,  PRakuID,  ParaID);
+            if(SuraID != prev){
+                String name = getSurahName(SuraID)[1];
+                tayahModel temp = getBismillah();
+                temp.setArabicText("\n" + name + "\n\n" + temp.getArabicText());
+                surah.add(temp);
+                surah.add(ayah);
+                prev = SuraID;
+            }
+            else{
+                surah.add(ayah);
+            }
+            cursorCourses.moveToNext();
+        }
+
+        return surah;
+    }
+
+    public tayahModel searchAyah(int surah_no, int ayah_no){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursorCourses = db.rawQuery("SELECT * FROM tayah WHERE SuraID="+surah_no+" AND AyaNo="+ ayah_no, null);
+
+        tayahModel ayah = null;
+        if(cursorCourses.moveToFirst()) {
+            int AyaID = cursorCourses.getInt(0);
+            int SuraID = cursorCourses.getInt(1);
+            int AyaNo = cursorCourses.getInt(2);
+            String ArabicText = cursorCourses.getString(3);
+            String TranslationU = cursorCourses.getString(4);
+            String TranslationE = cursorCourses.getString(6);
+            int RakuID = cursorCourses.getInt(8);
+            int PRakuID = cursorCourses.getInt(9);
+            int ParaID = cursorCourses.getInt(10);
+
+            ayah = new tayahModel( AyaID,  SuraID,  AyaNo,  ArabicText,  TranslationU,  TranslationE,  RakuID,  PRakuID,  ParaID);
+        }
+
+        return ayah;
     }
 
     public void CheckDatabase(){

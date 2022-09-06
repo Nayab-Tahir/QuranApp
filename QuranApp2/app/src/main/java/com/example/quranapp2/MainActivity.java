@@ -9,8 +9,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -47,19 +45,21 @@ public class MainActivity extends AppCompatActivity {
                     switch (menuItem.getItemId())
                     {
                         case R.id.nav_surahs:
-                            Intent intent = new Intent(MainActivity.this, AllSurahsView.class);
-                            intent.putExtra("language", language);
-                            startActivity(intent);
+                            Intent intent1 = new Intent(MainActivity.this, AllSurahsView.class);
+                            intent1.putExtra("language", language);
+                            startActivity(intent1);
                             break;
 
                         case R.id.nav_parahs:
-                            Toast.makeText(getApplicationContext(),"Retur is Clicked",Toast.LENGTH_LONG).show();
-                            //drawerLayout.closeDrawer(GravityCompat.START);
+                            Intent intent2 = new Intent(MainActivity.this, SingleParah.class);
+                            intent2.putExtra("language", language);
+                            startActivity(intent2);
                             break;
 
-                        case R.id.nav_voice :
-                            Toast.makeText(getApplicationContext(),"Voice is clicked",Toast.LENGTH_LONG).show();
-                            drawerLayout.closeDrawer(GravityCompat.START);
+                        case R.id.nav_search:
+                            Intent intent3 = new Intent(MainActivity.this, Search.class);
+                            intent3.putExtra("language", language);
+                            startActivity(intent3);
                             break;
 
                         case R.id.nav_lang_urdu:
