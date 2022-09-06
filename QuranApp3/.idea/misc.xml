@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/layout/activity_all_surahs_view.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.32020997375328086" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.29970004316689314" />
+        <entry key="app/src/main/res/layout/activity_single_parah.xml" value="0.3029394840848619" />
+        <entry key="app/src/main/res/layout/activity_single_surah.xml" value="0.28602447509765627" />
+        <entry key="app/src/main/res/layout/complete_surah_vieew.xml" value="0.22943942304970563" />
+        <entry key="app/src/main/res/layout/header.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/parah_view.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/surah_view.xml" value="0.23338382002236185" />
+        <entry key="app/src/main/res/menu/menu.xml" value="0.3098958333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
