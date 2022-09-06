@@ -1,9 +1,12 @@
 package com.example.quranapp3;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,8 +22,10 @@ public class SingleSurah extends AppCompatActivity {
         Intent intent = getIntent();
         int surahID = intent.getIntExtra("surahID",-1);
         String language = intent.getStringExtra("language");
-        ListView listView = findViewById(R.id.single_surah_listview);
+        RecyclerView recyclerView = findViewById(R.id.single_surah_recyclerview);
         TextView text = findViewById(R.id.surahName);
+
+        Log.e("no", surahID + "");
 
         ArrayList<tayahModel> list = new ArrayList<tayahModel>();
         DBHelper db = new DBHelper(this);
@@ -32,7 +37,8 @@ public class SingleSurah extends AppCompatActivity {
         else if(language.equals("Urdu"))
             text.setText(surahName[1]);
 
-        AyahAdapter ayahAdapter = new AyahAdapter(this, list, language);
-        listView.setAdapter(ayahAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerAyahAdapter ayahAdapter = new RecyclerAyahAdapter(list, language);
+        recyclerView.setAdapter(ayahAdapter);
     }
 }

@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".SingleSurah">
 
-    <ListView
-        android:id="@+id/single_surah_listview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:paddingBottom="140sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/surahName" />
-
     <TextView
         android:id="@+id/surahName"
         android:layout_width="wrap_content"
@@ -28,5 +17,13 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/single_surah_recyclerview"
+        android:layout_width="388dp"
+        android:layout_height="618dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/surahName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

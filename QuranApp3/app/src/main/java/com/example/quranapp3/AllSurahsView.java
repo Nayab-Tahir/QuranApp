@@ -33,7 +33,7 @@ public class AllSurahsView extends AppCompatActivity {
         ArrayList<tsurahModel> allSurahs = db.getAllSurahs();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerSurahAdapter recyclerSurahAdapter = new RecyclerSurahAdapter(allSurahs, language, new RecyclerSurahAdapter.OnItemClickListener(){
+        RecyclerSurahAdapter recyclerSurahAdapter = new RecyclerSurahAdapter(this, allSurahs, language, new RecyclerSurahAdapter.OnItemClickListener(){
 
             @Override
             public void onItemClick(tsurahModel surahModel) {

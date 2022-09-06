@@ -21,40 +21,14 @@ public class RecyclerSurahAdapter extends RecyclerView.Adapter<RecyclerSurahAdap
     ArrayList<tsurahModel> surahslist;
     String language;
     private OnItemClickListener listener;
+    Context context;
 
-    public RecyclerSurahAdapter(ArrayList<tsurahModel> surahslist, String language, OnItemClickListener listener) {
+    public RecyclerSurahAdapter(Context context, ArrayList<tsurahModel> surahslist, String language, OnItemClickListener listener) {
         this.surahslist = surahslist;
         this.language = language;
         this.listener = listener;
+        this.context = context;
     }
-    //    String language;
-//    Context context;
-//
-//    public SurahAdapter(@NonNull Context context, @NonNull ArrayList<tsurahModel> surahslist, String language) {
-//        super(context, 0, surahslist);
-//        this.language = language;
-//        this.context = context;
-//    }
-//
-//    @NonNull
-//    @Override
-//    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        LayoutInflater inflater = LayoutInflater.from(getContext());
-//        convertView = inflater.inflate(R.layout.surah_view, parent, false);
-//
-//        tsurahModel surah = getItem(position);
-//        TextView name = convertView.findViewById(R.id.surah_name_urdu);
-//        Typeface typeface = ResourcesCompat.getFont( this.context, R.font.jameel_noori_nastaleeq);
-//
-//        if(this.language.equals("English")){
-//            name.setTypeface(typeface);
-//            name.setText("\t" + surah.getSurahID() + "\t\t" + surah.getSurahNameE());
-//        }
-//        else if(this.language.equals("Urdu"))
-//            name.setText("\t" + surah.getSurahID() + "\t\t" + surah.getSurahNameU());
-//
-//        return convertView;
-//    }
 
     @NonNull
     @Override
@@ -67,10 +41,13 @@ public class RecyclerSurahAdapter extends RecyclerView.Adapter<RecyclerSurahAdap
     @Override
     public void onBindViewHolder(@NonNull RecyclerSurahAdapter.MyVH holder, int position) {
         holder.data = surahslist.get(position);
+        Typeface typeface = ResourcesCompat.getFont( this.context, R.font.jameel_noori_nastaleeq);
         if(language.equals("Urdu"))
             holder.surah_name.setText("\t" + holder.data.getSurahID() + "\t\t" + holder.data.getSurahNameU());
-        else
+        else{
+            holder.surah_name.setTypeface(typeface);
             holder.surah_name.setText("\t" + holder.data.getSurahID() + "\t\t" + holder.data.getSurahNameE());
+        }
         holder.surah_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

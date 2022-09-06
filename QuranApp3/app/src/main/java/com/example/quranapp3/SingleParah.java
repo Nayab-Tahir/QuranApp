@@ -1,13 +1,14 @@
 package com.example.quranapp3;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class SingleParah extends AppCompatActivity {
         String language = intent.getStringExtra("language");
 
         Spinner spinner = findViewById(R.id.spinner);
-        ListView listView = findViewById(R.id.single_para_listview);
+        RecyclerView recyclerView = findViewById(R.id.single_parah_recyclerview);
 
         List<String> paraNo = new ArrayList<>();
         for(int i=1; i<=30; i++){
@@ -39,8 +40,9 @@ public class SingleParah extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ArrayList<tayahModel> parah = db.getParah(position+1);
-                AyahAdapter ayahAdapter = new AyahAdapter(getApplicationContext(), parah, language);
-                listView.setAdapter(ayahAdapter);
+                RecyclerAyahAdapter ayahAdapter = new RecyclerAyahAdapter(parah, language);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                recyclerView.setAdapter(ayahAdapter);
             }
 
             @Override
